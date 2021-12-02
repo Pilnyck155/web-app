@@ -27,12 +27,12 @@ public class RequestParser {
         request.headers = new HashMap<>();
         while (true) {
             String headers = bufferedReader.readLine();
-            if (headers != null) {
+            if ((headers != "")&&(headers != null)) {
                 if (headers.contains(": ")){
                     String[] splitHeaders = headers.split(": ");
                         request.headers.put(splitHeaders[0], splitHeaders[1]);
                 } else {
-                    continue;
+                   break;
                 }
             } else {
                 break;

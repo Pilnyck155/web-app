@@ -54,21 +54,21 @@ class RequestTest {
     @DisplayName("read content from file in successfully")
     @Test
     public void testReadContentFromFileMethod() throws IOException {
-        //ResponseWriter responseWriter = new ResponseWriter();
         String setWebAppPath = "src/test/java/resources/";
-        //File file = new File(setWebAppPath)
+
         ResourceReader resourceReader = new ResourceReader(setWebAppPath);
-        //String actual = resourceReader.readResources("test1.txt");
         String actual = resourceReader.readResources("test1.txt");
-        String expected = "<!DOCTYPE html>" +
-                "<html>" +
-                "<head>" +
-                "  <link rel=\"stylesheet\" href=\"styles.css\">" +
-                "</head>" +
-                "<body>" +
-                "<h1>This is a heading</h1>" +
-                "</body>" +
-                "</html>";
+        String expected = "<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "  <link rel=\"stylesheet\" href=\"styles.css\">\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "\n" +
+                "<h1>This is a heading</h1>\n" +
+                "\n" +
+                "</body>\n" +
+                "</html>\n";
         assertEquals(expected, actual);
     }
 
@@ -79,7 +79,6 @@ class RequestTest {
 
         File file2 = new File("src/test/java/resources", "test2.txt");
         file2.createNewFile();
-        //File file2 = new File("src/test/java/resources", "test2.txt");
 
         String content = "<!DOCTYPE html>" +
                 "<html lang=\"en\">" +

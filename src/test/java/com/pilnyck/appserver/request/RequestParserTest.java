@@ -20,12 +20,25 @@ class RequestParserTest {
                 "Host: ru.wikipedia.org\n" +
                 "User-Agent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9b5) Gecko/2008050509 Firefox/3.0b5\n" +
                 "Accept: text/html\n" +
-                "Connection: close";
+                "Connection: close\n" + "";
         File file = new File("test.txt");
         file.createNewFile();
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));) {
             bufferedWriter.write(line);
         }
+
+        String line2 = "Host: ru.wikipedia.org\n" +
+                "User-Agent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9b5) Gecko/2008050509 Firefox/3.0b5\n" +
+                "Accept: text/html\n" +
+                "Connection: close\n" + "";
+        File file2 = new File("test2.txt");
+        file2.createNewFile();
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file2));) {
+            bufferedWriter.write(line2);
+        }
+
+
+
         File emptyFile = new File("testEmpty.txt");
         emptyFile.createNewFile();
     }
@@ -34,6 +47,9 @@ class RequestParserTest {
     static void after(){
         File file = new File("test.txt");
         file.delete();
+
+        File file2 = new File("test2.txt");
+        file2.delete();
 
         File emptyFile = new File("testEmpty.txt");
         emptyFile.delete();
@@ -46,7 +62,7 @@ class RequestParserTest {
                 "Host: ru.wikipedia.org\n" +
                 "User-Agent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9b5) Gecko/2008050509 Firefox/3.0b5\n" +
                 "Accept: text/html\n" +
-                "Connection: close";
+                "Connection: close\n" + "";
         requestParser.injectUriAndMethod(line, request);
         String actualMethod = String.valueOf(request.method);
         String actualUri = request.uri;
@@ -59,10 +75,9 @@ class RequestParserTest {
 
     @Test
     public void testInjectHeaders() throws IOException {
-        File file = new File("test.txt");
-        assertTrue(file.exists());
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-        Request request = new Request();
+        File file2 = new File("test2.txt");
+        assertTrue(file2.exists());
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file2));
 
         requestParser.injectHeaders(bufferedReader, request);
 
@@ -113,7 +128,7 @@ class RequestParserTest {
         expectedHeaders.put("Accept", "text/html");
         expectedHeaders.put("Connection", "close");
 
-        assertTrue(expectedHeaders.equals(actualRequest.headers));
+        assertEquals(expectedHeaders, actualRequest.headers);
         assertEquals(expectedMethod, actualRequest.method.toString());
         assertEquals(expectedUri, actualRequest.uri);
     }

@@ -15,6 +15,11 @@ h3{
     font-size: 30px;
     color: white;
 }
+
+h6{
+    font-size: 15px;
+    color: grey;
+}
 p {
   font-family: verdana;
   font-size: 20px;
